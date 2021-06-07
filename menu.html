@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+        #dishesDiv {
+            display: grid;
+            grid-template-columns: 21% 21% 21% 21%;
+            gap: 15px;
+        }
+        #dishesDiv > div {
+            border: 1px solid black;
+            height: 300px;
+            max-height: 650px;
+            padding: 5px;
+        }
+        img {
+            width: 80%;
+            height: 25%;
+        }
+        #cartbtn {
+            margin: 15px;
+            width: 400px;
+            height: 80px;
+        }
+
+        </style>
+    </head>
+    <body>
+        <h1>MENU</h1>
+        <button onclick="goToCart()" id="cartbtn">Go toCart</button>
+        <div id="dishesDiv">
+
+        </div>
+
+        <script type="text/javascript">
+        var dish = [
+            {
+                name: "Idli",
+                image: "http://via.placeholder.com/150",
+                price: 40,
+                desc: "Healthy South Indian dish",
+                time: "30 mins",
+            },
+            {
+                name: "Special Veg Curry",
+                image: "http://via.placeholder.com/150",
+                price: 400,
+                desc: "Chef Special Curry",
+                time: "50 mins",
+            },
+            {
+                name: "Dosa",
+                image: "http://via.placeholder.com/150",
+                price: 50,
+                desc: "Yummy South Indian dish",
+                time: "25 mins",
+            },
+            {
+                name: "Gobi Manchurian",
+                image: "http://via.placeholder.com/150",
+                price: 40,
+                desc: "A tasty Chinese dish.",
+                time: "45 mins",
+            },
+            {
+                name: "Veg Pulav",
+                image: "http://via.placeholder.com/150",
+                price: 80,
+                desc: "Healthy South Indian dish",
+                time: "40 mins",
+            }
+        ];
+        
+        localStorage.setItem('dishes', JSON.stringify(dish));
+        let dishes = JSON.parse(localStorage.getItem('dishes'));
+        dishes.forEach(function(element) {
+            let div = document.createElement('div');
+            let p1 = document.createElement('p');
+            p1.textContent = element.name;
+            let p2 = document.createElement('p');
+            p2.textContent = `Price: ${element.price}`;
+            let p3 = document.createElement('p');
+            p3.textContent = `Description: ${element.desc}`;
+            let p4 = document.createElement('p');
+            p4.textContent = `Time to Prepare ${element.time}`;
+            let img = document.createElement('img');
+            img.src = element.image;
+            let btn = document.createElement('button');
+            btn.textContent = "Add to Cart";
+            btn.onclick = function() {
+                addToCart(element);
+            }
+            div.append(p1, p2, p3, p4, img, btn);
+            document.getElementById('dishesDiv').append(div);
+        })
+        function addToCart(e) {
+            let cartItems = localStorage.getItem('cart');
+            if(cartItems == null) {
+                cartItems = [];
+            } else {
+                cartItems = JSON.parse(cartItems);
+            }
+            cartItems.push(e);
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+        }
+        function goToCart() {
+            window.location.href = 'cart.html';
+        }
+        </script>
+    </body>
+</html>
